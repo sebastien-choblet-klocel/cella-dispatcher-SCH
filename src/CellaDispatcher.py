@@ -114,7 +114,7 @@ def init_logs(config: configparser.ConfigParser) -> None:
     # testdir = path.abspath(path.join(path.dirname(__file__), 'CellaDispatcher.exe'))
     logging.info(resource_path('SumatraPDF.exe'))
     logging.info("SCH IXI 2nd commit.,,,.")
-    logging.info(testdir)
+    # logging.info(testdir)
 
     if config["CONFIG"]["Debug"] == "yes":
         logging.info("Debug mode is enabled")
@@ -476,7 +476,7 @@ async def print_current_document(config, document: Dict[str, Any]):
                         if document["documentType"].lower() == "rml" or document["documentType"].lower() == "pdf":
 
                             # os.popen(resource_path('SumatraPDF.exe'))
-                            subprocess.run(["SumatraPDF.exe", "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
+                            subprocess.run([resource_path('SumatraPDF.exe'), "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
 
                         elif document["documentType"].lower() == "zpl":
                             printer_handle = win32print.OpenPrinter(printer_name)
