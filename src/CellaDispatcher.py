@@ -109,8 +109,9 @@ def init_logs(config: configparser.ConfigParser) -> None:
         level=logging.DEBUG,
     )
     logging.info("Start KloDispatcher")
-
-    testdir = path.abspath(path.join(path.dirname(__file__), 'CellaDispatcher.exe'))
+    logging.info(path.dirname(__file__))
+    logging.info("Starttttt")
+    # testdir = path.abspath(path.join(path.dirname(__file__), 'CellaDispatcher.exe'))
     logging.info("SCH IXI 2nd commit.,,,.")
     logging.info(testdir)
 
