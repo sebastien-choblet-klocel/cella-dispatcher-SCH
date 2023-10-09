@@ -111,7 +111,7 @@ def init_logs(config: configparser.ConfigParser) -> None:
     logging.info("Start KloDispatcher")
 
     testdir = path.abspath(path.join(path.dirname(__file__), 'SumatraPDF.exe'))
-    logging.info("SCH IXI 2nd commit")
+    logging.info("SCH IXI 2nd commit..")
     logging.info(testdir)
 
     if config["CONFIG"]["Debug"] == "yes":
