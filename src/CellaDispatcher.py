@@ -93,6 +93,8 @@ def init_logs(config: configparser.ConfigParser) -> None:
     if not os.path.isdir(os.path.join(get_cella_directory(), config["CONFIG"]["LogDirectory"])):
         os.makedirs(os.path.join(get_cella_directory(), config["CONFIG"]["LogDirectory"]))
 
+    
+
     # Remove all handlers associated with the root logger object.
     for handler in logging.root.handlers[:]:
         logging.root.removeHandler(handler)
@@ -107,6 +109,11 @@ def init_logs(config: configparser.ConfigParser) -> None:
         level=logging.DEBUG,
     )
     logging.info("Start KloDispatcher")
+
+    testdir = path.abspath(path.join(path.dirname(__file__), 'SumatraPDF.exe'))
+    logging.info("SCH IXI")
+    logging.info(testdir)
+
     if config["CONFIG"]["Debug"] == "yes":
         logging.info("Debug mode is enabled")
         requests_logger.setLevel(logging.INFO)
