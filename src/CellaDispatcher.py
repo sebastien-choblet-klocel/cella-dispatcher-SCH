@@ -112,7 +112,7 @@ def init_logs(config: configparser.ConfigParser) -> None:
     # logging.info(get_cella_directory())
     # logging.info("Starttttt")
     # testdir = path.abspath(path.join(path.dirname(__file__), 'CellaDispatcher.exe'))
-    logging.info(os.popen(resource_path('SumatraPDF.exe')))
+    logging.info(resource_path('SumatraPDF.exe'))
     logging.info("SCH IXI 2nd commit.,,,.")
     logging.info(testdir)
 
