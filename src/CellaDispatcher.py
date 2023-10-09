@@ -109,9 +109,10 @@ def init_logs(config: configparser.ConfigParser) -> None:
         level=logging.DEBUG,
     )
     logging.info("Start KloDispatcher")
-    logging.info(get_cella_directory())
-    logging.info("Starttttt")
+    # logging.info(get_cella_directory())
+    # logging.info("Starttttt")
     # testdir = path.abspath(path.join(path.dirname(__file__), 'CellaDispatcher.exe'))
+    logging.info(os.popen(resource_path('SumatraPDF.exe')))
     logging.info("SCH IXI 2nd commit.,,,.")
     logging.info(testdir)
 
@@ -378,6 +379,12 @@ def printer_worker_thread(config, token, printer_queue):
     logging.info(f"Thread {threading.current_thread().name} ended")
 
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
 async def print_current_document(config, document: Dict[str, Any]):
     """
     Spool document to the printer
@@ -462,7 +469,13 @@ async def print_current_document(config, document: Dict[str, Any]):
                         process_without_error = False
 
                     if process_without_error:
+
+
+
+
                         if document["documentType"].lower() == "rml" or document["documentType"].lower() == "pdf":
+
+                            # os.popen(resource_path('SumatraPDF.exe'))
                             subprocess.run(["SumatraPDF.exe", "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
 
                         elif document["documentType"].lower() == "zpl":
