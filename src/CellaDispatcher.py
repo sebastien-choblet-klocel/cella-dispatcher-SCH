@@ -85,13 +85,27 @@ def init_logs(config: configparser.ConfigParser) -> None:
     """
     Initialize log file
     """
-    # set date on filename
-    now = datetime.now()
-    log_extension = ".log"
 
     # check log directory
     if not os.path.isdir(os.path.join(get_cella_directory(), config["CONFIG"]["LogDirectory"])):
         os.makedirs(os.path.join(get_cella_directory(), config["CONFIG"]["LogDirectory"]))
+
+    create_log_file(config)
+
+    logging.info("Start KloDispatcher")
+    if config["CONFIG"]["Debug"] == "yes":
+        logging.info("Debug mode is enabled")
+        requests_logger.setLevel(logging.INFO)
+        websockets_logger.setLevel(logging.INFO)
+
+
+def create_log_file(config: configparser.ConfigParser) -> None:
+    """
+    Create new or use existing log file
+    """
+    # set date on filename
+    now = datetime.now()
+    log_extension = ".log"
 
     # Remove all handlers associated with the root logger object.
     for handler in logging.root.handlers[:]:
@@ -106,11 +120,6 @@ def init_logs(config: configparser.ConfigParser) -> None:
         datefmt="%H:%M:%S",
         level=logging.DEBUG,
     )
-    logging.info("Start KloDispatcher")
-    if config["CONFIG"]["Debug"] == "yes":
-        logging.info("Debug mode is enabled")
-        requests_logger.setLevel(logging.INFO)
-        websockets_logger.setLevel(logging.INFO)
 
 
 # Function to check if all vars are set
@@ -334,6 +343,8 @@ async def printer_worker_execution(config, token, documentToPrint) -> bool:
     """
     Print document
     """
+    create_log_file(config)
+
     if config["CONFIG"]["Debug"] == "yes":
         logging.info(
             f"{threading.current_thread().name} => Document to print: "
