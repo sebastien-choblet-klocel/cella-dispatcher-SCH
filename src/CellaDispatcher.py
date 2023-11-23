@@ -377,7 +377,7 @@ async def subscription(config: configparser.ConfigParser, token: str, log_date: 
         now = datetime.now()
         current_date = f"{now.year}{now.month:02d}{now.day:02d}"
 
-        if not current_date == log_date:
+        if not current_date == log_date or 1 == 1:
             logging.info("System date changed")
             # delete old log archives
             delete_archives(config)
