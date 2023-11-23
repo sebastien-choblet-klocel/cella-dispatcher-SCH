@@ -493,6 +493,9 @@ async def print_current_document(config, document: Dict[str, Any]):
                             result_print = subprocess.run([path_to_sumatra, "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
                             logging.info("SCH SCH SCH")
                             logging.info(result_print)
+                            logging.info(result_print.returncode)
+                            if result_print.returncode == 1:
+                                raise Exception(f"Return code: {result_print.returncode}")
 
                         elif document["documentType"].lower() == "zpl":
                             printer_handle = win32print.OpenPrinter(printer_name)
