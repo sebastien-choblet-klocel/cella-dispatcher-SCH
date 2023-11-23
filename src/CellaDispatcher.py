@@ -237,10 +237,10 @@ def delete_error_files(config: configparser.ConfigParser) -> None:
                 modification_datetime = datetime.fromtimestamp(os.path.getmtime(file_path))
 
                 # Calculate the age of the file in days
-                age_in_days = (current_datetime - modification_time).days
+                age_in_days = (current_datetime - modification_datetime).days
                 logging.info(f"age in days : {age_in_days}")
                 logging.info(f"current_datetime : {current_datetime}")
-                logging.info(f"modification_time : {modification_time}")
+                logging.info(f"modification_datetime : {modification_datetime}")
                 logging.info(f"LogRetentionDays : {int(config['CONFIG']['LogRetentionDays'])}")
                 # Delete the file if it's older than the threshold
                 if age_in_days > int(config["CONFIG"]["LogRetentionDays"]):
