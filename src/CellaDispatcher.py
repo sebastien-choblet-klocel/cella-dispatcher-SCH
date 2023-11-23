@@ -489,7 +489,9 @@ async def print_current_document(config, document: Dict[str, Any]):
                         if document["documentType"].lower() == "rml" or document["documentType"].lower() == "pdf":
                             bundle_dir = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))
                             path_to_sumatra = os.path.abspath(os.path.join(bundle_dir,'SumatraPDF.exe'))
-                            subprocess.run([path_to_sumatra, "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
+                            # subprocess.run([path_to_sumatra, "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
+                            result_print = subprocess.run([path_to_sumatra, "-print-to", printer_name, "-silent", "-exit-on-print", file_path])
+                            logging.info(result_print)
 
                         elif document["documentType"].lower() == "zpl":
                             printer_handle = win32print.OpenPrinter(printer_name)
