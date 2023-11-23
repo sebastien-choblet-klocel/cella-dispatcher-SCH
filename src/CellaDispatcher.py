@@ -211,6 +211,41 @@ def delete_archives(config: configparser.ConfigParser) -> None:
         logging.error(f"Error: {e}")
 
 
+# Fonction to remove old error files
+def delete_error_files(config: configparser.ConfigParser) -> None:
+    """
+    Delete old error files
+    """
+
+    # Remove old error files
+    logging.info("Remove old error files")
+
+    try:
+
+        # Calculate the date threshold for old files
+        current_datetime = datetime.now()
+        # threshold_date = current_date - timedelta(days=int(config["CONFIG"]["LogRetentionDays"]))
+
+        for file_name in os.listdir(os.path.join(config["CONFIG"]["TempDirectory"], "errors")):
+            file_path = os.path.join(os.path.join(config["CONFIG"]["TempDirectory"], "errors", file_name))
+
+            # Check if the path is a file and not a directory
+            if os.path.isfile(file_path):
+                # Get the last modification time of the file
+                modification_datetime = datetime.fromtimestamp(os.path.getmtime(file_path))
+
+                # Calculate the age of the file in days
+                age_in_days = (current_datetime - modification_time).days
+
+                # Delete the file if it's older than the threshold
+                if age_in_days > int(config["CONFIG"]["LogRetentionDays"]):
+                    os.remove(file_path)
+                    logging.info(f"Removed old error file: {file_name}")
+
+    except Exception as e:
+        logging.error(f"Error: {e}")
+
+
 # Function to update document print status
 async def update_document_print_status(
     config: configparser.ConfigParser, session, token: str, document_id: str
@@ -341,6 +376,8 @@ async def subscription(config: configparser.ConfigParser, token: str, log_date: 
             logging.info("System date changed")
             # delete old log archives
             delete_archives(config)
+            # delete old error files
+            delete_error_files(config)
 
             # create new log file
             create_log_file(config)
