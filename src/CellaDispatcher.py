@@ -378,10 +378,10 @@ async def printer_worker_execution(config, token, documentToPrint) -> bool:
         process_without_error = True
     else:
         process_without_error = await print_current_document(config, documentToPrint)
-    if process_without_error:
-        await update_document_print_status(config, None, token, documentToPrint["id"])
-    else:
-        logging.error("Document history not updated : error occured during printing.")
+    
+    await update_document_print_status(config, None, token, documentToPrint["id"])
+    if not process_without_error:
+        logging.error("Document history updated BUT error occured during printing.")
     return True
 
 
